@@ -4,9 +4,8 @@ void setup(){
 
   // Game outputs
   pinMode(9, OUTPUT);   // Speaker
-  pinMode(1, OUTPUT);  // Green LED
-  pinMode(3, OUTPUT);  // Red LED
-  
+  pinMode(1, OUTPUT);   // Green LED
+  pinMode(3, OUTPUT);   // Red LED  
 }
 
 void loop(){
@@ -15,7 +14,6 @@ void loop(){
   int score = 0;
   int task = 0;
   bool success = false;
-  bool fail = false;
   int timer = 0;
 
   do{
@@ -24,13 +22,12 @@ void loop(){
 
       // Case 1 Device on
       case 1:
-        digitalWrite(3, HIGH);         // Red LED On
+        digitalWrite(3, HIGH);          // Red LED On
         // LCD Display
         
         // If Game start button high
-        if(digitalRead(8) == HIGH){     // Push Button Starts Game
-          state = 2;
-        }
+        do{}while(digitalRead(8) == LOW);             // Empty loop waiting for button press
+        state = 2;                                    // Game start state activate
         break;
         
       // Case 2 Game start
@@ -38,7 +35,6 @@ void loop(){
         // Reset variables
         score = 0;
         success = false;
-        fail = false;
         task = 0;
         timer = 0;
 
@@ -71,18 +67,18 @@ void loop(){
       case 4:
 
         // Tone for Bop It
-        tone(9, 800, 500);                                     // One Tone
+        tone(9, 800, 500);                                    // One Tone
       
         //Loop for Task timing
         do{
-          if(digitalRead(8) == HIGH){                          // Button Press
+          if(digitalRead(8) == HIGH){                         // Button Press
             success = true;
             break;
           }
-          else if(analogRead(3) == HIGH){  // Incorrect Inputs
+          else if(analogRead(3) == HIGH){                     // Incorrect Inputs (Speaker or twist)
             break;
           }
-        }while(timer < 100000);           // Timer Expiration
+        }while(timer < 10000000);                             // Timer Expiration
 
         break;
         
@@ -91,19 +87,19 @@ void loop(){
 
         // Tone for Twist
         tone(9, 800, 500);                                    // One Tone
-        delay(20);
+        delay(50);
         tone(9, 800, 500);                                    // Second Tone
       
         //Loop for Task timing
         do{
-          if(1){                          // Potentiometer Twist
+          if(1){                                              // Potentiometer Twist
             success = true;
             break;
           }
           else if(analogRead(3) > 0 || digitalRead(8) == HIGH){     // Incorrect Inputs
             break;
           }
-        }while(timer < 100000);           // Timer Expiration
+        }while(timer < 10000000);                             // Timer Expiration
         
         break;
         
@@ -111,35 +107,36 @@ void loop(){
       case 6:
 
         // Tone for Yell
-        tone(9, 800, 500);                                    // One Tone
-        delay(20);
-        tone(9, 800, 500);                                    // Second Tone
-        delay(20);
-        tone(9, 800, 500);                                    // Third Tone
+        tone(9, 800, 500);                                      // One Tone
+        delay(50);
+        tone(9, 800, 500);                                      // Second Tone
+        delay(50);
+        tone(9, 800, 500);                                      // Third Tone
       
         //Loop for Task timing
         do{
-          if(analogRead(3) > 0){                              // Speaker high
+          if(analogRead(3) > 0){                                // Microphone high
             success = true;
             break;
           }
-          else if(digitalRead(8) == HIGH){                    // Incorrect Inputs
+          else if(digitalRead(8) == HIGH){                      // Incorrect Inputs
             break;
           }
-        }while(timer < 100000);                               // Timer Expiration
+        }while(timer < 10000000);                               // Timer Expiration
         
         break;
         
       // Case 7 Game Failure
       case 7:
 
-        digitalWrite(1, LOW);                 // Green LED Low
-        digitalWrite(3, HIGH);                // Red LED High
+        digitalWrite(1, LOW);                                   // Green LED Low
+        digitalWrite(3, HIGH);                                  // Red LED High
       
         // Play Failure tone
-        tone(9, 350, 200);
+        tone(9, 350, 200);                                      // Wamp wamp wahhhh
         tone(9, 250, 200);
         tone(9, 150, 1000);
+        
         // Display score
         
         state = 1;
@@ -150,18 +147,14 @@ void loop(){
       if(state == 4 || state == 5 || state == 6){
         if(success == true){                                  // Success Conditions
           digitalWrite(1, HIGH);                              // Green LED HIGH  
-          // Increment score          
-          score++;
+          score++;                                            // Increment score
           // Play success tone
           
-          //Next task
-          state = 3;
+          state = 3;                                          // Next task gen
         }  
         else{                                                 // Failure Conditions
           state = 7;
         } 
       }
-      
   }while(state<8);
-  
 }
