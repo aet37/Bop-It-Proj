@@ -12,12 +12,13 @@ void setup() {
 }
 
 void loop() {
-  bool in = digitalRead(6);
-  bool new_in;
   digitalWrite(3, LOW);
-  do{
-    new_in = digitalRead(6);
-  }while(new_in == in);
+  if(digitalRead(6) == HIGH){
+    do{}while(digitalRead(6) == HIGH);
+  }
+  else if(digitalRead(6) == LOW){
+    do{}while(digitalRead(6) == LOW);
+  }
   digitalWrite(3, HIGH);
   delay(50);
 }
