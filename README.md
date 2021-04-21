@@ -17,7 +17,7 @@ An image of the game is included below
 There are 3 top-level folders in this project:
 
 1. Hardware
-> > Includes the Altium design files of the PCB used to create the final game. Also includes an image of the schematic of the hardware used.
+> > Includes the Altium design files of the PCB used to create the final game with the GERBER and NCDrill files included in a .zip file. Also includes an image of the schematic of the hardware used.
 2. Software
 > > Includes Arduino .ino files of the code used to program the finite state machine (FSM) of the game. Also includes .ino test files in the /test subfolder.
 3. Enclosure
