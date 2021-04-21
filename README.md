@@ -11,7 +11,7 @@ The game has the design of an old-fashioned nintendo controller. The 3 commands 
 
 An image of the game is included below
 
-!(/enclosure_files/game.jpg)
+![](/enclosure_files/game.jpg)
 
 ## File Navigation
 There are 3 top-level folders in this project:
